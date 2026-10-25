@@ -1,0 +1,27 @@
+class InsufficientFundsError(Exception):
+    pass 
+
+# BankAccount class
+class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            raise InsufficientFundsError(f"Cannot withdraw {amount}, balance is {self.balance}")
+        self.balance -= amount
+
+acc = BankAccount("Ali", 1000)
+acc.deposit(500)  # 1500
+acc.withdraw(300) # 1200
+print(acc.balance) # 1200
+
+# Try to withdraw 5000
+try:
+    acc.withdraw(5000)
+except InsufficientFundsError as e:
+    print("Error: ",e)

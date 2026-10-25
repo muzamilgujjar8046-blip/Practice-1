@@ -1,0 +1,60 @@
+class Inventory:
+    
+    def __init__(self):
+        self.items = {} # isme saara samaan aayega, jaise {"pen": (10,25)}
+
+    #  Item add karne ka method
+    def add_item(self, name, qty, price):
+        self.items[name] = (qty, price) # dict me daal do
+
+    # Item remove ka method
+    def remove_item(self, name):
+        if name not in self.items: # agar naam nahi mila
+            raise KeyError(f"No item named {name}") # error phenk do
+        del self.items[name] # warna delete kar do
+
+    #  Total kimat nikalne ka method
+    def total_value(self):
+        total = 0
+        # self.items.values() se (qty, price) ke jore milenge
+        for qty, price in self.items.values():
+            total += qty * price # 10*25 jor do
+        return total
+
+    #  len() ke liye magic method
+    def __len__(self):
+        return len(self.items) # kitne items hain dict me
+
+# --- Yahan se Main Program Shuru ---
+
+#  Ek khali inventory banao
+inv = Inventory()
+
+#  File kholo, with se file khud band ho jati hai
+with open("stock.txt", "r") as f:
+    # 9. Har line pe loop
+    for line in f:
+        line = line.strip() # aage peeche ka space / \n hatao
+        if not line: # agar khali line ho to skip
+            continue
+        try: # koshish karo
+            # 10. "pen,10,25" ko 3 hisso me todo
+            name, qty_str, price_str = line.split(",")
+            qty = int(qty_str) # "10" ko 10 banao
+            price = int(price_str) # "25" ko 25 banao
+            inv.add_item(name, qty, price) # add kar do
+        except ValueError: # agar int() fail ho jaye, jaise abc
+            print(f"Skipping {name}: bad number") # bag wali line yahan ayegi
+
+#  Print count aur value
+print(f"{len(inv)} items, total value {inv.total_value()}")
+
+# pen hatao
+inv.remove_item("pen")
+print(f"{len(inv)} items, total value {inv.total_value()}")
+
+#  laptop hatao, hai hi nahi to error ayega
+try:
+    inv.remove_item("laptop")
+except KeyError as e:
+    print(f"Error: {e}")

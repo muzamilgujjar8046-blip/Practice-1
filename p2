@@ -1,0 +1,16 @@
+marks = [88, 45, 92, 67, 30, 75]
+# count how many are 50 more marks
+count = 0
+for i in marks:
+	if i >= 50:
+		count+= 1
+print("passed:",count)	
+# find average up to 1 decimal place	
+sum = sum(marks)
+len = len(marks)
+avg = sum/len
+#print (" average: ",avg)
+print(f" Average:  {avg:.1f}")
+# Highest and lowest
+print(f"Highest: {max(marks)}")
+print(f"Lowest: {min(marks)}")

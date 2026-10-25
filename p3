@@ -1,0 +1,17 @@
+word = "Programming"
+
+# Print the word reversed using slicing
+print(word[::-1])  
+
+# First 3 and last 3 characters on one line
+print(word[:3], word[-3:])
+
+#  Count how many times "m" appears
+print(word.count("m"))
+
+# is_palindrome(s) function
+def is_palindrome(i):
+    return i == i[::-1]  
+    
+print(is_palindrome("level"))  # True
+print(is_palindrome("python")) # False
